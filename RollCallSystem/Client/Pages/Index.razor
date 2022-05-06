@@ -2,8 +2,37 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello </h1>
+<h1>@theTime</h1>
+<h1>SDW22</h1>
+<button type="button" class="btn btn-secondary btn-lg">Start Roll Call</button>
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+
+    //GetCurrentUser
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+   
+    
+    
+    
+    //Timer
+    string theTime;    
+    Timer aTimer;
+
+    protected override void OnInitialized()
+    {
+        aTimer = new Timer(Tick, null, 0, 1000);        
+    }
+
+    private void Tick(object _)
+    {
+        theTime = DateTime.Now.ToLongTimeString();
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        aTimer?.Dispose();
+    }
+}
