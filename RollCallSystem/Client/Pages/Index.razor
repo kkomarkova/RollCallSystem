@@ -28,13 +28,14 @@ else
         }
         <h2>@lesson.subjectName, @lesson.campusName</h2>
         <h2>@lesson.startTime - @lesson.startTime.AddMinutes(45)</h2>
-        <button type="button" class="btn btn-secondary btn-lg" @onclick="NavigateToCounterComponent">Start Roll Call</button>
-
-        <h1>Code: </h1>
-        <h1>The Roll Call started at</h1>
-        <h1>The Roll Call will finish</h1>
-    }
-    
+        <button disabled=@isRollCallWaiting hidden=@isRollCall type="button" class="btn btn-secondary btn-lg" @onclick="StartRollCall">Start Roll Call</button>
+        @if(lesson.code != null)
+        {
+            <h2>Roll call has started!</h2>
+            <h1>@lesson.code</h1>
+            <h3>Students checked in: (just an idea, this doesn't do anything)</h3>
+        }        
+    }    
 }
 <h1>@theTime</h1>
 
@@ -43,6 +44,8 @@ else
 @code {
     private User? user;
     private Lesson? lesson;
+    private bool isRollCallWaiting;
+    private bool isRollCall;
 
     private LoginViewModel loginViewModel = new LoginViewModel();
 
@@ -70,7 +73,6 @@ else
 
         try
         {
-
             loginViewModel.LogIn("james6789@kea.dk", "pass5678");
         }
         catch (AccessTokenNotAvailableException exception)
@@ -100,6 +102,17 @@ else
     private void DisplayCurrentLesson(Lesson lesson)
     {
         this.lesson = lesson;
+        if(lesson.code != null)
+        {
+            isRollCall = true;
+        }
         InvokeAsync(StateHasChanged);
+    }
+
+    private void StartRollCall()
+    {
+        isRollCallWaiting = true;
+        InvokeAsync(StateHasChanged);
+        loginViewModel.StartRollCall(lesson, user);
     }
 }

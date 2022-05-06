@@ -9,14 +9,36 @@ namespace RollCallSystem.Client.Services
 
         public async Task<bool> GetCurrentLesson(User user)
         {
-            Lesson loggedInUser;
+            Lesson currentLesson;
 
             LessonController userController = new LessonController();
-            loggedInUser = await userController.GetCurrentLesson(user);
+            currentLesson = await userController.GetCurrentLesson(user);
 
-            if (loggedInUser != null)
+            if (currentLesson != null)
             {
-                OnCurrentLessonUpdated?.Invoke(loggedInUser);
+                OnCurrentLessonUpdated?.Invoke(currentLesson);
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> StartRollCall(Lesson lesson, User user)
+        {
+            Lesson currentLesson = null;
+
+            LessonController userController = new LessonController();
+
+            bool success = await userController.StartRollCall(lesson, user);
+
+            if (success)
+            {
+                currentLesson = await userController.GetCurrentLesson(user);
+            }            
+
+            if (currentLesson != null)
+            {
+                OnCurrentLessonUpdated?.Invoke(currentLesson);
                 return true;
             }
 

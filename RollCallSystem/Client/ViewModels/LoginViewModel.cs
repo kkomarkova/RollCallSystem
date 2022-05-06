@@ -23,5 +23,11 @@ namespace RollCallSystem.Client.ViewModels
             LessonService lessonService = new LessonService();
             bool success = await lessonService.GetCurrentLesson(user);
         }
+
+        public async Task StartRollCall(Lesson lesson, User user)
+        {
+            LessonService lessonService = new LessonService();
+            bool success = await lessonService.StartRollCall(lesson, user);
+        }
     }
 }
