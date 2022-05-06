@@ -1,11 +1,14 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
 
 <PageTitle>Index</PageTitle>
-
 <h1>Hello </h1>
 <h1>@theTime</h1>
 <h1>SDW22</h1>
-<button type="button" class="btn btn-secondary btn-lg">Start Roll Call</button>
+<button type="button" class="btn btn-secondary btn-lg" @onclick="NavigateToCounterComponent">Start Roll Call</button>
+
+<h1>The Roll Call started at</h1>
+<h1>The Roll Call will finish</h1>
 
 
 @code {
@@ -13,8 +16,10 @@
     //GetCurrentUser
     [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
    
-    
-    
+    //After button click
+     private void NavigateToCounterComponent() 
+     { NavigationManager.NavigateTo("counter");
+     } 
     
     //Timer
     string theTime;    
