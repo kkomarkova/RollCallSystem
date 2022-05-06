@@ -1,26 +1,59 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
+@using RollCallSystem.Shared
+@using RollCallSystem.Client.ViewModels
+@using RollCallSystem.Client.Services
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
+@inject HttpClient Http
 
 <PageTitle>Index</PageTitle>
-<h1>Hello </h1>
-<h1>@theTime</h1>
-<h1>SDW22</h1>
-<button type="button" class="btn btn-secondary btn-lg" @onclick="NavigateToCounterComponent">Start Roll Call</button>
+@if (user == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h1>Kindly have a good morning, sir, @user.FirstName.</h1>
+    @if (lesson != null)
+    {
+        if(lesson.startTime < DateTime.Now)
+        {
+            <h1>Current lesson:</h1>
+        }
+        else
+        {
+           <h1>Upcoming lesson:</h1> 
+        }
+        <h2>@lesson.subjectName, @lesson.campusName</h2>
+        <h2>@lesson.startTime - @lesson.startTime.AddMinutes(45)</h2>
+        <button type="button" class="btn btn-secondary btn-lg" @onclick="NavigateToCounterComponent">Start Roll Call</button>
 
-<h1>The Roll Call started at</h1>
-<h1>The Roll Call will finish</h1>
+        <h1>Code: </h1>
+        <h1>The Roll Call started at</h1>
+        <h1>The Roll Call will finish</h1>
+    }
+    
+}
+<h1>@theTime</h1>
+
 
 
 @code {
+    private User? user;
+    private Lesson? lesson;
+
+    private LoginViewModel loginViewModel = new LoginViewModel();
 
     //GetCurrentUser
     [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
-   
+
     //After button click
-     private void NavigateToCounterComponent() 
-     { NavigationManager.NavigateTo("counter");
-     } 
-    
+    private void NavigateToCounterComponent() 
+    { NavigationManager.NavigateTo("counter");
+    } 
+
     //Timer
     string theTime;    
     Timer aTimer;
@@ -28,6 +61,22 @@
     protected override void OnInitialized()
     {
         aTimer = new Timer(Tick, null, 0, 1000);        
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        LoginService.OnLoginSuccessful += (x) => DisplayGreeting(x);
+        LessonService.OnCurrentLessonUpdated += (x) => DisplayCurrentLesson(x);
+
+        try
+        {
+
+            loginViewModel.LogIn("james6789@kea.dk", "pass5678");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
     }
 
     private void Tick(object _)
@@ -39,5 +88,18 @@
     public void Dispose()
     {
         aTimer?.Dispose();
+    }
+
+    private void DisplayGreeting(User user)
+    {
+        this.user = user;
+        InvokeAsync(StateHasChanged);
+        loginViewModel.GetCurrentLesson(user);
+    }
+
+    private void DisplayCurrentLesson(Lesson lesson)
+    {
+        this.lesson = lesson;
+        InvokeAsync(StateHasChanged);
     }
 }

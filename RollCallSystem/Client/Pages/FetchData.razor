@@ -10,14 +10,14 @@
 <PageTitle>Weather forecast</PageTitle>
 
 <h1>Weather forecast</h1>
-@if (user == null)
+@*@if (user == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h1>Good morning, @user.FirstName.</h1>
-}
+    <h1>Good morning, @user.FirstName. Kindly</h1>
+}*@
 
 @*<p>This component demonstrates fetching data from the server.</p>
 
@@ -52,27 +52,27 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
-    private User? user;
+    //private User? user;
 
     protected override async Task OnInitializedAsync()
     {
-        LoginService.OnLoginSuccessful += (x) => DisplayGreeting(x);
+        //LoginService.OnLoginSuccessful += (x) => DisplayGreeting(x);
 
-        try
-        {
-            //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-            //Login user with hardcoded data (for Monday)
-            LoginViewModel loginViewModel = new LoginViewModel();
-            await loginViewModel.LogIn("james6789@kea.dk", "pass5678");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
+        //try
+        //{
+        //    //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        //    //Login user with hardcoded data (for Monday)
+        //    LoginViewModel loginViewModel = new LoginViewModel();
+        //    await loginViewModel.LogIn("james6789@kea.dk", "pass5678");
+        //}
+        //catch (AccessTokenNotAvailableException exception)
+        //{
+        //    exception.Redirect();
+        //}
     }
 
-    private void DisplayGreeting(User user)
-    {
-        this.user = user;
-    }
+    //private void DisplayGreeting(User user)
+    //{
+    //    this.user = user;
+    //}
 }
