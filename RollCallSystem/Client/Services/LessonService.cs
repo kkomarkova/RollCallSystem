@@ -7,6 +7,9 @@ namespace RollCallSystem.Client.Services
     {
         public static Action<Lesson> OnCurrentLessonUpdated;
 
+        private LessonController lessonController = new LessonController();
+        private UserController userController = new UserController();
+
         public async Task<bool> GetCurrentLesson(User user)
         {
             Lesson currentLesson;
@@ -16,6 +19,9 @@ namespace RollCallSystem.Client.Services
 
             if (currentLesson != null)
             {
+                OnCurrentLessonUpdated?.Invoke(currentLesson);
+
+                currentLesson.checkedInStudents = await GetCheckedInStudents(currentLesson, user);
                 OnCurrentLessonUpdated?.Invoke(currentLesson);
                 return true;
             }
@@ -27,13 +33,11 @@ namespace RollCallSystem.Client.Services
         {
             Lesson currentLesson = null;
 
-            LessonController userController = new LessonController();
-
-            bool success = await userController.StartRollCall(lesson, user);
+            bool success = await lessonController.StartRollCall(lesson, user);
 
             if (success)
             {
-                currentLesson = await userController.GetCurrentLesson(user);
+                currentLesson = await lessonController.GetCurrentLesson(user);
             }            
 
             if (currentLesson != null)
@@ -43,6 +47,15 @@ namespace RollCallSystem.Client.Services
             }
 
             return false;
+        }
+
+        public async Task<List<User>> GetCheckedInStudents(Lesson lesson, User user)
+        {
+            List<User> checkedInStudents = new List<User>();
+
+            checkedInStudents = await userController.GetCheckedInStudents(lesson, user);
+
+            return checkedInStudents;
         }
     }
 }

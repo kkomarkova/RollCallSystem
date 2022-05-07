@@ -15,6 +15,7 @@ namespace RollCallSystem.Shared
         public DateTime? codeTime;
         public string campusName;
         public string teacherName;
+        public List<User> checkedInStudents;
 
         public Lesson(int id, string subjectName, DateTime startTime, int? code, DateTime? codeTime, string campusName, string teacherName)
         {
@@ -25,8 +26,14 @@ namespace RollCallSystem.Shared
             this.codeTime = codeTime;
             this.campusName = campusName;
             this.teacherName = teacherName;
+            this.checkedInStudents = new List<User>();
         }
 
         public Lesson() { }
+
+        public void AddCheckedInStudents(List<User> students)
+        {
+            this.checkedInStudents = students;
+        }
     }
 }

@@ -24,5 +24,14 @@ namespace RollCallSystem.Shared
             Email = email;
             Token = token;
         }
+
+        public User(int id, string firstName, string lastName, string email)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Token = "";
+        }
     }
 }

@@ -33,7 +33,14 @@ else
         {
             <h2>Roll call has started!</h2>
             <h1>@lesson.code</h1>
-            <h3>Students checked in: (just an idea, this doesn't do anything)</h3>
+            <h3>Students checked in:</h3>
+            @if(lesson.checkedInStudents.Count() > 0)
+            {
+                foreach(User student in lesson.checkedInStudents)
+                {
+                    <h4>@student.FirstName @student.LastName, @student.Email</h4>
+                }
+            }            
         }        
     }    
 }

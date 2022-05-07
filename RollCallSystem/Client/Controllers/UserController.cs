@@ -8,6 +8,7 @@ namespace RollCallSystem.Client.Controllers
     public class UserController
     {
         private const string Url = "https://rollcallsystem-kea.azurewebsites.net/api/";
+        private HttpClient client = new HttpClient();
 
         public async Task<User> LogIn(string email, string password)
         {
@@ -22,9 +23,6 @@ namespace RollCallSystem.Client.Controllers
 
             string jsonData = JsonConvert.SerializeObject(loginData);
             StringContent postData = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            HttpClient client = new HttpClient();
-
             HttpResponseMessage response = await client.PostAsync(Url + "JWTTokens", postData);
             response.EnsureSuccessStatusCode();
             token = await response.Content.ReadAsStringAsync();
@@ -44,6 +42,33 @@ namespace RollCallSystem.Client.Controllers
             user = new User(userData.id, userData.firstName, userData.lastName, userData.email, token);
 
             return user;
+        }
+
+        public async Task<List<User>> GetCheckedInStudents(Lesson lesson, User user)
+        {
+            List<User> checkedInStudents = new List<User>();
+
+            HttpResponseMessage response;
+
+            using (var requestMessage =
+            new HttpRequestMessage(HttpMethod.Get, Url + "Lessons/GetAllCheckedIn/" + lesson.id))
+            {
+                requestMessage.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", user.Token);
+
+                response = await client.SendAsync(requestMessage);
+            }
+
+            response.EnsureSuccessStatusCode();
+            string content = await response.Content.ReadAsStringAsync();
+            List<UserData> lessonData = JsonConvert.DeserializeObject<List<UserData>>(content);
+
+            foreach(UserData data in lessonData)
+            {
+                checkedInStudents.Add(new User(data.id, data.firstName, data.lastName, data.email));
+            }
+
+            return checkedInStudents;
         }
 
         [Serializable]
