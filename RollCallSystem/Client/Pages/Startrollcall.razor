@@ -11,13 +11,87 @@
 @inject LocalStorage Storage
 
 <div class="ms_content_wrapper padder_top90">
-@if (user == null)
+    <div class="row">
+    <div class="col">
+     <div class="container">
+  <section class="mx-auto my-5" style="max-width: 23rem;">
+      
+    <div class="card testimonial-card mt-2 mb-3">
+      <div class="card-up aqua-gradient"></div>
+      <div class="avatar mx-auto white">
+        <img src="images/personicon.jpg" class="rounded-circle img-fluid"
+          alt="woman avatar">
+      </div>
+      <div class="card-body text-center">
+          @if (user == null)
+{
+
+    <p><em>Loading...</em></p>
+
+}
+else
+{<h4 class="card-title font-weight-bold">Hello, @user.FirstName.</h4>
+}
+        <hr>
+        <p><i class="fas fa-quote-left"></i> Let your unique awesomeness and positive energy inspire confidence in others</p>
+        <h5><i class="bi bi-alarm"></i>@theTime</h5>
+      </div>
+    </div>
+  </section>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="container">
+    <section class="mx-auto my-5" style="max-width: 23rem;">
+    @if (lesson != null)
+    {
+        if(lesson.startTime < DateTime.Now)
+        {
+           
+            <h1>Current lesson</h1>
+            
+        }
+        else
+        {
+           
+           <h1>Upcoming lesson</h1>
+           <p></p>
+        }
+        <p>@lesson.subjectName, @lesson.campusName</p>
+        <p>@lesson.startTime - @lesson.startTime.AddMinutes(45)</p>
+        <p></p>
+        <button disabled=@isRollCallWaiting hidden=@isRollCall type="button" class="btn btn-secondary btn-lg" @onclick="StartRollCall">Start Roll Call</button>
+        @if(lesson.code != null)
+        {
+            <h2 class="h4">Roll call has started!</h2>
+            <h1>@lesson.code</h1>
+            <h2 class="h4">Students checked in</h2>
+            @if(lesson.checkedInStudents.Count() > 0)
+            {
+                foreach(User student in lesson.checkedInStudents)
+                {
+                    <p>@student.FirstName @student.LastName, @student.Email</p>
+                }
+            }            
+        }        
+    } 
+
+ </section>
+</div>
+
+</div>
+    </div>
+    </div>
+   
+
+@*@if (user == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h1>Kindly have a good morning, sir, @user.FirstName.</h1>
+    <h1>Hello, @user.FirstName.</h1>
 
     @if (lesson != null)
     {
@@ -48,7 +122,7 @@ else
     }    
 }
 <h1>@theTime</h1>
-</div>
+</div>*@
 @code {
     private User? user;
     private Lesson? lesson;
