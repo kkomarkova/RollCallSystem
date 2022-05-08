@@ -5,11 +5,12 @@ namespace RollCallSystem.Client.ViewModels
 {
     public class LoginViewModel
     {
+        public static User currentUser { get; private set; }
         
 
         public LoginViewModel()
         {
-            
+            LoginService.OnLoginSuccessful += (x => AssignCurrentUser(x));
         }
 
         public async Task LogIn(string email, string password)
@@ -28,6 +29,11 @@ namespace RollCallSystem.Client.ViewModels
         {
             LessonService lessonService = new LessonService();
             bool success = await lessonService.StartRollCall(lesson, user);
+        }
+
+        private void AssignCurrentUser(User user)
+        {
+            currentUser = user;
         }
     }
 }

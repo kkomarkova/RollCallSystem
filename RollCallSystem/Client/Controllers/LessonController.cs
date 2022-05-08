@@ -38,6 +38,37 @@ namespace RollCallSystem.Client.Controllers
             return lesson;
         }
 
+        public async Task<List<Lesson>> GetLessonsByMonth(User user, int monthNo)
+        {
+            Console.WriteLine("1");
+            List<Lesson> lessons = new List<Lesson>();
+            Console.WriteLine("2");
+
+            HttpResponseMessage response;
+            Console.WriteLine("3 " + user.Token);
+
+            using (var requestMessage =
+            new HttpRequestMessage(HttpMethod.Get, Url + "Lessons/ByMonth/" + monthNo))
+            {
+                requestMessage.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", user.Token);
+
+                response = await client.SendAsync(requestMessage);
+            }
+            Console.WriteLine(response.StatusCode);
+
+            response.EnsureSuccessStatusCode();
+            string content = await response.Content.ReadAsStringAsync();
+            List<LessonData> lessonsRaw = JsonConvert.DeserializeObject<List<LessonData>>(content);
+            foreach(LessonData lessonData in lessonsRaw)
+            {
+                lessons.Add(new Lesson(lessonData.id, lessonData.subjectName, lessonData.startTime, lessonData.code, lessonData.codeTime,
+                lessonData.campusName, lessonData.teacherName));
+            }
+
+            return lessons;
+        }
+
         public async Task<bool> StartRollCall(Lesson lesson, User user)
         {
             bool success = false;

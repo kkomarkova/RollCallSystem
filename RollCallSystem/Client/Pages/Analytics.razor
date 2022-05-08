@@ -1,6 +1,266 @@
 ﻿@page "/Analytics"
-<h3>analytics</h3>
-<SfCalendar TValue="DateTime" />
-@code {
+@using RollCallSystem.Client.Services
+@using RollCallSystem.Shared
+@using RollCallSystem.Client.ViewModels
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+@inject LocalStorage Storage
 
+<h3>analytics</h3>
+<table>
+    @if (dayOfWeek != default)
+    {
+        switch (dayOfWeek)
+        {
+            case "Mon":
+                <tr>
+                    <th class="timeTableColumn">Monday</th>
+                    <th class="timeTableColumn">Tuesday</th>
+                    <th class="timeTableColumn">Wednesday</th>
+                    <th class="timeTableColumn">Thursday</th>
+                    <th class="timeTableColumn">Friday</th>
+                    <th class="timeTableColumn">Saturday</th>
+                    <th class="timeTableColumn">Sunday</th>
+                </tr>
+                break;
+            case "Tue":
+                <tr>
+                    <th class="timeTableColumn">Tuesday</th>
+                    <th class="timeTableColumn">Wednesday</th>
+                    <th class="timeTableColumn">Thursday</th>
+                    <th class="timeTableColumn">Friday</th>
+                    <th class="timeTableColumn">Saturday</th>
+                    <th class="timeTableColumn">Sunday</th>
+                    <th class="timeTableColumn">Monday</th>
+                </tr>
+                break;
+            case "Wed":
+                <tr>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                </tr>
+                break;
+            case "Thu":
+                <tr>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                </tr>
+                break;
+            case "Fri":
+                <tr>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                </tr>
+                break;
+            case "Sat":
+                <tr>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+                break;
+            case "Sun":
+                <tr>
+                    <th class="time">Sunday</th>
+                    <th class="time">Monday</th>
+                    <th class="time">Tuesday</th>
+                    <th class="time">Wednesday</th>
+                    <th class="time">Thursday</th>
+                    <th class="time">Friday</th>
+                    <th class="time">Saturday</th>
+                </tr>
+                break;
+        }
+
+        <tr>
+        @for (int i = 1; i <= 7; i++)
+        {
+            var local_i = i;
+            <td><div>@local_i@GetDayEnding(local_i)<br>
+                        @foreach(Lesson lesson in lessonsInMonth)
+                        {
+                            var local_lesson = lesson;
+                            if(lesson.startTime.Day == local_i)
+                            {
+                                <button type="button" @onclick="() => GetAttendanceInfo(local_lesson)">@lesson.startTime.Hour:@lesson.startTime.Minute - @lesson.startTime.AddMinutes(45).Hour:@lesson.startTime.AddMinutes(45).Minute @lesson.subjectName</button><br>
+                            }
+                        }
+                    </div></td>
+        }
+        </tr>
+        <tr>
+        @for (int i = 8; i <= 14; i++)
+        {
+            var local_i = i;
+            <td><div>@local_i@GetDayEnding(local_i)<br>
+                        @foreach(Lesson lesson in lessonsInMonth)
+                        {
+                            var local_lesson = lesson;
+                            if(lesson.startTime.Day == local_i)
+                            {
+                                <button type="button" @onclick="() => GetAttendanceInfo(local_lesson)">@lesson.startTime.Hour:@lesson.startTime.Minute - @lesson.startTime.AddMinutes(45).Hour:@lesson.startTime.AddMinutes(45).Minute @lesson.subjectName</button><br>
+                            }
+                        }
+                    </div></td>
+        }
+        </tr>
+        <tr>
+        @for (int i = 15; i <= 21; i++)
+        {
+            var local_i = i;
+            <td><div>@local_i@GetDayEnding(local_i)<br>
+                        @foreach(Lesson lesson in lessonsInMonth)
+                        {
+                            var local_lesson = lesson;
+                            if(lesson.startTime.Day == local_i)
+                            {
+                                <button type="button" @onclick="() => GetAttendanceInfo(local_lesson)">@lesson.startTime.Hour:@lesson.startTime.Minute - @lesson.startTime.AddMinutes(45).Hour:@lesson.startTime.AddMinutes(45).Minute @lesson.subjectName</button><br>
+                            }
+                        }
+                    </div></td>
+        }
+        </tr>
+        <tr>
+        @for (int i = 22; i <= 28; i++)
+        {
+            var local_i = i;
+            <td><div>@local_i@GetDayEnding(local_i)<br>
+                        @foreach(Lesson lesson in lessonsInMonth)
+                        {
+                            var local_lesson = lesson;
+                            if(lesson.startTime.Day == local_i)
+                            {
+                                <button type="button" @onclick="() => GetAttendanceInfo(local_lesson)">@lesson.startTime.Hour:@lesson.startTime.Minute - @lesson.startTime.AddMinutes(45).Hour:@lesson.startTime.AddMinutes(45).Minute @lesson.subjectName</button><br>
+                            }
+                        }
+                    </div></td>
+        }
+        </tr>
+        <tr>
+        @for (int i = 29; i <= GetDaysOfMonth(DateTime.Now.Year, selectedMonth); i++)
+        {
+            var local_i = i;
+            <td><div>@local_i@GetDayEnding(local_i)<br>
+                        @foreach(Lesson lesson in lessonsInMonth)
+                        {
+                            var local_lesson = lesson;
+                            if(lesson.startTime.Day == local_i)
+                            {
+                                <button type="button" @onclick="() => GetAttendanceInfo(local_lesson)">@lesson.startTime.Hour:@lesson.startTime.Minute - @lesson.startTime.AddMinutes(45).Hour:@lesson.startTime.AddMinutes(45).Minute @lesson.subjectName</button><br>
+                            }
+                        }
+                    </div></td>
+        }
+        </tr>      
+    }
+</table>
+<h3>Checked in students:</h3>
+@foreach(User student in attendingStudents)
+{
+      <h6>@student.FirstName @student.LastName, @student.Email</h6>      
+}
+
+@code {
+    private User user;
+    private int selectedMonth;
+    private string dayOfWeek;
+    private int dayofweekInNum;
+    private List<Lesson> lessonsInMonth = new List<Lesson>();
+    private List<User> attendingStudents = new List<User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        LessonService.OnLessonsByMonthUpdated += (x => GetLessons(x));
+        LoginService.OnLoginSuccessful += (x => AssignUser(x));
+
+        selectedMonth = DateTime.Now.Month;
+
+        DateTime firstOfMonth = new DateTime(2022, selectedMonth, 1);
+        dayOfWeek = firstOfMonth.ToString("ddd");
+        InvokeAsync(StateHasChanged);
+        LoginService loginService = new LoginService();
+        loginService.LoginUser(Storage.GetItem("Email"), Storage.GetItem("Password"));
+    }
+
+    private async Task GetAttendanceInfo(Lesson lesson)
+    {
+        LessonService lessonService = new LessonService();
+        attendingStudents = await lessonService.GetCheckedInStudents(lesson, user);
+        InvokeAsync(StateHasChanged);
+    } 
+
+    private void AssignUser(User user)
+    {
+        this.user = user;
+        AskForLessons(user);
+    }
+
+    private void AskForLessons(User user)
+    {
+        LessonService lessonService = new LessonService();
+        lessonService.GetLessonsByMonth(user, selectedMonth);
+    }
+
+    private void GetLessons(List<Lesson> lessons)
+    {
+        lessonsInMonth = lessons.OrderBy(x => x.startTime).ToList();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private int GetDaysOfMonth(int year, int month)
+    {
+        return DateTime.DaysInMonth(year, month);
+    }
+
+    private void ShowPosition(int i)
+    {
+        Console.WriteLine(i);
+    }
+
+    private int GetDayOfWeekInt(string name)
+    {
+        switch (name)
+        {
+            case "Mon": return 1;
+            case "Tue": return 2;
+            case "Wed": return 3;
+            case "Thu": return 4;
+            case "Fri": return 5;
+            case "Sat": return 6;
+            case "Sun": return 7;
+            default: return 0;
+        }
+    }
+
+    private string GetDayEnding(int day)
+    {
+        switch (day)
+        {
+            case 1 or 21 or 31:
+                return "st";
+            case 2 or 22:
+                return "nd";
+            case 3 or 23:
+                return "rd";
+            default: return "th";
+        }
+    }
 }

@@ -2,6 +2,7 @@
 using RollCallSystem.Shared;
 using System.Net.Http.Headers;
 using System.Text;
+using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace RollCallSystem.Client.Controllers
 {

@@ -7,6 +7,8 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @attribute [Authorize]
 @inject HttpClient Http
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+@inject LocalStorage Storage
 
 <div class="ms_content_wrapper padder_top90">
 @if (user == null)
@@ -79,7 +81,12 @@ else
 
         try
         {
-            loginViewModel.LogIn("james6789@kea.dk", "pass5678");
+            string email = "james6789@kea.dk";
+            string password = "pass5678";
+            loginViewModel.LogIn(email, password);
+            Storage.SetItem("Email", email);
+            Storage.SetItem("Password", password);
+
         }
         catch (AccessTokenNotAvailableException exception)
         {

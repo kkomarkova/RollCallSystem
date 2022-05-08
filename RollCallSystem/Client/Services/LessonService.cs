@@ -6,6 +6,7 @@ namespace RollCallSystem.Client.Services
     public class LessonService
     {
         public static Action<Lesson> OnCurrentLessonUpdated;
+        public static Action<List<Lesson>> OnLessonsByMonthUpdated;
 
         private LessonController lessonController = new LessonController();
         private UserController userController = new UserController();
@@ -43,6 +44,19 @@ namespace RollCallSystem.Client.Services
             if (currentLesson != null)
             {
                 OnCurrentLessonUpdated?.Invoke(currentLesson);
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> GetLessonsByMonth(User user, int monthNo)
+        {
+            List<Lesson> lessons = await lessonController.GetLessonsByMonth(user, monthNo);
+            Console.WriteLine("succ");
+            if (lessons != default)
+            {
+                OnLessonsByMonthUpdated?.Invoke(lessons);
                 return true;
             }
 

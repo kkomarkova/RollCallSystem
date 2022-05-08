@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RollCallSystem.Client;
 using Microsoft.AspNetCore.Cors;
 using Syncfusion.Blazor;
+using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 // Register Syncfusion license
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjMyNjYzQDMyMzAyZTMxMmUzMEsrN0JyZWY0TStVNGFwRDBsVC9Ed1RSR3hJcVkrY3NMdHRIVDRsbnhUWW89");
@@ -20,6 +21,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().Cre
 
 builder.Services.AddApiAuthorization();
 builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
+builder.Services.AddStorage();
 
 
 await builder.Build().RunAsync();
