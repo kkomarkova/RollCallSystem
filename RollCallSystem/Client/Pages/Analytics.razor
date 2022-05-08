@@ -5,8 +5,10 @@
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 @inject LocalStorage Storage
 
-<h3>analytics</h3>
+<div class="ms_content_wrapper padder_top90">
+   
 <table>
+    <caption>Lesson Calendar</caption>
     @if (dayOfWeek != default)
     {
         switch (dayOfWeek)
@@ -172,11 +174,13 @@
         </tr>      
     }
 </table>
+<p></p>
 <h3>Checked in students:</h3>
 @foreach(User student in attendingStudents)
 {
-      <h6>@student.FirstName @student.LastName, @student.Email</h6>      
+      <p>@student.FirstName @student.LastName, @student.Email</p>      
 }
+</div>
 
 @code {
     private User user;

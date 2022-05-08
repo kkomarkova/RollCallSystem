@@ -6,3 +6,68 @@
 th.time {
     width: 14%
 }*/
+caption {
+    font-size: 30px;
+    line-height: 36px;
+    color: #fb4c67;
+    caption-side: top;
+}
+.button {
+    background-color: #04AA6D;
+    !important;
+    border: none;
+    !important;
+    color: white;
+    !important;
+    text-align: center;
+    !important;
+    text-decoration: none;
+    !important;
+    display: inline-block;
+    !important;
+    font-size: 6px !important;
+    border-radius: 4px;
+    !important;
+    
+}
+
+table {
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.1);
+    /*font-family: 'Ubuntu';*/ /*border-collapse: collapse;*/
+    border-spacing: 0;
+    background-color: #6d747d;
+}
+th, td {
+    border: 1px solid rgba(255,255,255,0.1);
+    box-sizing: border-box;
+    
+}
+
+th {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 10px 0;
+    color: white;
+    background-color: #fb4c67;
+    letter-spacing: 1px;
+}
+
+td {
+    
+    width: 14.285%;
+    transition: all 0.3s;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+    font-size: 14px;
+    padding: 1.5% 1.5% 5%;
+    vertical-align: initial;
+    padding: 1.5% 0;
+    height: 25px;
+}
