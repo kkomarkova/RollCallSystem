@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RollCallSystem.Client;
 using Microsoft.AspNetCore.Cors;
+using Syncfusion.Blazor;
+
+// Register Syncfusion license
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjMyNjYzQDMyMzAyZTMxMmUzMEsrN0JyZWY0TStVNGFwRDBsVC9Ed1RSR3hJcVkrY3NMdHRIVDRsbnhUWW89");
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,6 +19,8 @@ builder.Services.AddHttpClient("RollCallSystem.ServerAPI", client => client.Base
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("RollCallSystem.ServerAPI"));
 
 builder.Services.AddApiAuthorization();
+builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
+
 
 await builder.Build().RunAsync();
 
