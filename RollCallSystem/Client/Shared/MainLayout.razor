@@ -1,6 +1,34 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
+    
+    <NavMenu />
+    
+
+    <div >
+        <div class="ms_sidemenu_wrapper">
+            <Sidemenu/>
+        </div>
+        
+            
+            <div class="ms_content_wrapper padder_top90">
+                    @Body
+                
+            </div>
+            
+        
+        <!----Footer Start---->
+        <footer>
+         
+        </footer>
+    </div>
+</div>
+
+
+
+@*@inherits LayoutComponentBase
+
+<div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -9,10 +37,10 @@
         <div class="top-row px-4 auth">
             <LoginDisplay />
             @*<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>*@
-        </div>
+        @*</div>
 
         <article class="content px-4">
             @Body
         </article>
     </main>
-</div>
+</div>*@
