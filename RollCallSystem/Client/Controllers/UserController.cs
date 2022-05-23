@@ -45,6 +45,7 @@ namespace RollCallSystem.Client.Controllers
             return user;
         }
 
+
         public async Task<List<User>> GetCheckedInStudents(Lesson lesson, User user)
         {
             List<User> checkedInStudents = new List<User>();
