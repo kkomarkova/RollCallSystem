@@ -33,7 +33,10 @@ else
 {<h4 class="card-title font-weight-bold">Hello, @user.FirstName.</h4>
 }
         <hr>
-        <p><i class="fas fa-quote-left"></i> Let your unique awesomeness and positive energy inspire confidence in others.</p>
+        @if (quote != null)
+       {
+         <p><i class="fas fa-quote-left"></i>@quote.text -@quote.author</p>  
+       }
         <h5>@theTime</h5>
       </div>
     </div>
@@ -128,6 +131,7 @@ else
     private Lesson? lesson;
     private bool isRollCallWaiting;
     private bool isRollCall;
+    private Quote? quote;
 
     private LoginViewModel loginViewModel = new LoginViewModel();
 
@@ -152,6 +156,7 @@ else
     {
         LoginService.OnLoginSuccessful += (x) => DisplayGreeting(x);
         LessonService.OnCurrentLessonUpdated += (x) => DisplayCurrentLesson(x);
+        QuoteService.OnQuotesUpdated +=(x) => DisplayQuote(x);
 
         try
         {
@@ -167,6 +172,7 @@ else
             exception.Redirect();
         }
     }
+
 
     private void Tick(object _)
     {
@@ -201,6 +207,11 @@ else
         isRollCallWaiting = true;
         InvokeAsync(StateHasChanged);
         loginViewModel.StartRollCall(lesson, user);
+    }
+
+    private void DisplayQuote()
+    {
+       this. 
     }
 
 }
