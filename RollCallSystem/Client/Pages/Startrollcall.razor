@@ -35,7 +35,8 @@ else
         <hr>
         @if (quote != null)
        {
-         <p><i class="fas fa-quote-left"></i>@quote.text -@quote.author</p>  
+         <p><i class="fas fa-quote-left"></i> @quote.text
+             -@quote.author</p>  
        }
         <h5>@theTime</h5>
       </div>
@@ -160,7 +161,7 @@ else
         try
         {
             string email = "james6789@kea.dk";
-            string password = "pass5678";
+            string password = "pass456";
             loginViewModel.LogIn(email, password);
             Storage.SetItem("Email", email);
             Storage.SetItem("Password", password);

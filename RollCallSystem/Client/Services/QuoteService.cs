@@ -6,7 +6,7 @@ namespace RollCallSystem.Client.Services
     public class QuoteService
     {
         private QuotesController quotesController = new QuotesController();
-        private List<Quote> quotes = new List<Quote>();
+        private List<Quote> quotes;
 
         private async Task<List<Quote>> GetQuotes()
         {
@@ -34,7 +34,7 @@ namespace RollCallSystem.Client.Services
                 await GetQuotes();
             }
             Random random = new Random();
-            return quotes[random.Next(quotes.Count)];
+            return quotes[random.Next(0, quotes.Count - 1)];
 
         }
     }
