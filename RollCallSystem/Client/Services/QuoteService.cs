@@ -5,8 +5,6 @@ namespace RollCallSystem.Client.Services
 {
     public class QuoteService
     {
-        public static Action<List<Quote>> OnQuotesUpdated;
-
         private QuotesController quotesController = new QuotesController();
         private List<Quote> quotes = new List<Quote>();
 
@@ -14,7 +12,6 @@ namespace RollCallSystem.Client.Services
         {
             if(quotes!= default)
             {
-                OnQuotesUpdated?.Invoke(quotes);
                 return quotes;
             }
 
@@ -23,11 +20,10 @@ namespace RollCallSystem.Client.Services
 
             if (quotes != null)
             {
-                OnQuotesUpdated?.Invoke(quotes);
-                return true;
+                return quotes;
             }
 
-            return false;
+            return default;
 
         }
 
