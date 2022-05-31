@@ -1,44 +1,181 @@
-﻿<!-- create table -->
-   <div class="d-flex justify-content-center">
+﻿@using RollCallSystem.Client.Services;
+
+<div class="d-flex justify-content-center">
       <div class = title >Personal calculator</div>
       </div>
        <div class="d-flex justify-content-center">
       <table border="1">
          <tr>
-            <td colspan="3"><input type="text" id="result"/></td>
+            <td colspan="3"><input type="text" readonly="readonly" id="result" value="@output"/></td>
             <!-- clr() function will call clr to clear all value -->
             <td><input type="button" value="c" onclick="clr()"/> </td>
          </tr>
          <tr>
             <!-- create button and assign value to each button -->
             <!-- dis("1") will call function dis to display value -->
-            <td><input type="button" value="1" onclick="dis('1')"/> </td>
-            <td><input type="button" value="2" onclick="dis('2')"/> </td>
-            <td><input type="button" value="3" onclick="dis('3')"/> </td>
-            <td><input type="button" value="/" onclick="dis('/')"/> </td>
+            <td><input type="button" value="1" @onclick="Button1"/> </td>
+            <td><input type="button" value="2" @onclick="Button2"/> </td>
+            <td><input type="button" value="3" @onclick="Button3"/> </td>
+            <td><input type="button" value="/" @onclick="Divide"/> </td>
          </tr>
          <tr>
-            <td><input type="button" value="4" onclick="dis('4')"/> </td>
-            <td><input type="button" value="5" onclick="dis('5')"/> </td>
-            <td><input type="button" value="6" onclick="dis('6')"/> </td>
-            <td><input type="button" value="-" onclick="dis('-')"/> </td>
+            <td><input type="button" value="4" @onclick="Button4"/> </td>
+            <td><input type="button" value="5" @onclick="Button5"/> </td>
+            <td><input type="button" value="6" @onclick="Button6"/> </td>
+            <td><input type="button" value="-" @onclick="Minus"/> </td>
          </tr>
          <tr>
-            <td><input type="button" value="7" onclick="dis('7')"/> </td>
-            <td><input type="button" value="8" onclick="dis('8')"/> </td>
-            <td><input type="button" value="9" onclick="dis('9')"/> </td>
-            <td><input type="button" value="+" onclick="dis('+')"/> </td>
+            <td><input type="button" value="7" @onclick="Button7"/> </td>
+            <td><input type="button" value="8" @onclick="Button8"/> </td>
+            <td><input type="button" value="9" @onclick="Button9"/> </td>
+            <td><input type="button" value="+" @onclick="Plus"/> </td>
          </tr>
          <tr>
-            <td><input type="button" value="." onclick="dis('.')"/> </td>
-            <td><input type="button" value="0" onclick="dis('0')"/> </td>
-            <!-- solve function call function solve to evaluate value -->
-            <td><input type="button" value="=" onclick="solve()"/> </td>
-            <td><input type="button" value="*" onclick="dis('*')"/> </td>
+            <td><input type="button" value="." @onclick="ButtonComma"/> </td>
+            <td><input type="button" value="0" @onclick="Button0"/> </td>
+            <td><input type="button" value="=" @onclick="Equals"/> </td>
+            <td><input type="button" value="*" @onclick="Multiply"/> </td>
          </tr>
       </table>
   </div>
     
 @code {
+    private CalculatorService calculator;
+    private string output;
 
+    protected override void OnInitialized()
+    {
+        calculator = new CalculatorService();     
+    }
+
+    private void CalculatorInput(int input)
+    {
+        calculator.AddDigit(input);
+        ChangeOutput(calculator.GetOutput());
+    }
+
+    private void CalculatorSpecialInput(char input)
+    {
+        switch (input)
+        {
+            case '.':
+                calculator.AddComma();
+                ChangeOutput(calculator.GetOutput());
+                break;
+            case '+':
+                calculator.ChangeState(CalculatorState.Plus);
+                ChangeOutput(calculator.GetOutput());
+                break;
+            case '-':
+                calculator.ChangeState(CalculatorState.Minus);
+                ChangeOutput(calculator.GetOutput());
+                break;
+            case '*':
+                calculator.ChangeState(CalculatorState.Multiply);
+                ChangeOutput(calculator.GetOutput());
+                break;
+            case '/':
+                calculator.ChangeState(CalculatorState.Divide);
+                ChangeOutput(calculator.GetOutput());
+                break;
+            case 'c':
+                calculator.Reset();
+                ChangeOutput(calculator.GetOutput());
+                break;
+            case '=':
+                ChangeOutput(calculator.Calculate());
+                break;
+        }
+    }
+
+    private void ChangeOutput(string newOutput)
+    {
+        output = newOutput;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void Button1()
+    {
+        CalculatorInput(1);
+    }
+
+    private void Button2()
+    {
+        CalculatorInput(2);
+    }
+
+    private void Button3()
+    {
+        CalculatorInput(3);
+    }
+
+    private void Button4()
+    {
+        CalculatorInput(4);
+    }
+
+    private void Button5()
+    {
+        CalculatorInput(5);
+    }
+
+    private void Button6()
+    {
+        CalculatorInput(6);
+    }
+
+    private void Button7()
+    {
+        CalculatorInput(7);
+    }
+
+    private void Button8()
+    {
+        CalculatorInput(8);
+    }
+
+    private void Button9()
+    {
+        CalculatorInput(9);
+    }
+
+    private void Button0()
+    {
+        CalculatorInput(0);
+    }
+
+    private void ButtonComma()
+    {
+        CalculatorSpecialInput('.');
+    }
+
+    private void Clear()
+    {
+        CalculatorSpecialInput('c');
+    }
+
+    private void Plus()
+    {
+        CalculatorSpecialInput('+');
+    }
+
+    private void Minus()
+    {
+        CalculatorSpecialInput('-');
+    }
+
+    private void Multiply()
+    {
+        CalculatorSpecialInput('*');
+    }
+
+    private void Divide()
+    {
+        CalculatorSpecialInput('/');
+    }
+
+    private void Equals()
+    {
+        CalculatorSpecialInput('=');
+    }
 }
