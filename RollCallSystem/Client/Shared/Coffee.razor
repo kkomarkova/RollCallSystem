@@ -1,14 +1,25 @@
-﻿@*<div class="d-flex justify-content-center">
-<h1>Am I drinking way too much coffee?</h1>
-</div>*@
+﻿@using RollCallSystem.Client.Services;
+
 <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-secondary btn-sm">I have had coffee</button>
+    <button type="button" class="btn btn-secondary btn-sm" disabled=@coffeeButtonDisabled @onclick="CoffeeClicked">Click me when you've had some coffee</button>
 </div>
 <div class="d-flex justify-content-center">
-    <h2> Attandance Broseph says : It is time to stop ! </h2>
+    <h2> Attandance Broseph says: @response </h2>
 </div>
 
 
 @code {
+    private string response = "No coffee today?";
+    private int coffeesHad = 0;
+    private bool coffeeButtonDisabled = false;
+    private CoffeeTrackerService tracker = new CoffeeTrackerService();
 
+    private void CoffeeClicked(){
+        if(!tracker.GetRecommendation(coffeesHad, out response))
+        {
+            coffeeButtonDisabled = true;
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
 }

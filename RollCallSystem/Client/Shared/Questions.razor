@@ -1,17 +1,29 @@
-﻿@*<div class="d-flex justify-content-center">
-<h1>Do you need help in making decisions? </h1>
-</div>*@
+﻿@using RollCallSystem.Client.Services;
+
 <div class="d-flex justify-content-center">
-  <input type="text" aria-label="Question" aria-describedby="inputGroup-sizing-sm" class="border border-secondary">
+  <input type="text" id="question" aria-label="Question" @bind="question" aria-describedby="inputGroup-sizing-sm" class="border border-secondary">
+  <button type="button" class="btn btn-secondary btn-sm" @onclick="Decide">Contact the spirits</button>
 </div>
 <div class="d-flex justify-content-center">
 <img class="img" src="images/magic-ball.png" alt="Magicball">
 </div>
 <div class="d-flex justify-content-center">
-<h2> Magic ball answer is: Nah !</h2>
+<h2>@answer</h2>
 </div>
 
 
 @code {
+    private string answer;
+    private string question = "";
+    private MagicBallService ball = new MagicBallService();
 
+    private void Decide()
+    {
+        if (ball.ValidateQuestion(question))
+            answer = "Magic 8-Ball says: " + ball.ContactTheSpirits();
+        else
+            answer = "The spirits could not comprehend your question. Ask again.";
+
+        InvokeAsync(StateHasChanged);
+    }
 }

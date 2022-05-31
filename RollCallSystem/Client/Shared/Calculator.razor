@@ -56,35 +56,44 @@
 
     private void CalculatorSpecialInput(char input)
     {
-        switch (input)
+        try
         {
-            case '.':
-                calculator.AddComma();
-                ChangeOutput(calculator.GetOutput());
-                break;
-            case '+':
-                calculator.ChangeState(CalculatorState.Plus);
-                ChangeOutput(calculator.GetOutput());
-                break;
-            case '-':
-                calculator.ChangeState(CalculatorState.Minus);
-                ChangeOutput(calculator.GetOutput());
-                break;
-            case '*':
-                calculator.ChangeState(CalculatorState.Multiply);
-                ChangeOutput(calculator.GetOutput());
-                break;
-            case '/':
-                calculator.ChangeState(CalculatorState.Divide);
-                ChangeOutput(calculator.GetOutput());
-                break;
-            case 'c':
-                calculator.Reset();
-                ChangeOutput(calculator.GetOutput());
-                break;
-            case '=':
-                ChangeOutput(calculator.Calculate());
-                break;
+            switch (input)
+            {
+                case '.':
+                    calculator.AddComma();
+                    ChangeOutput(calculator.GetOutput());
+                    break;
+                case '+':
+                    calculator.ChangeState(CalculatorState.Plus);
+                    ChangeOutput(calculator.GetOutput());
+                    break;
+                case '-':
+                    calculator.ChangeState(CalculatorState.Minus);
+                    ChangeOutput(calculator.GetOutput());
+                    break;
+                case '*':
+                    calculator.ChangeState(CalculatorState.Multiply);
+                    ChangeOutput(calculator.GetOutput());
+                    break;
+                case '/':
+                    calculator.ChangeState(CalculatorState.Divide);
+                    ChangeOutput(calculator.GetOutput());
+                    break;
+                case 'c':
+                    calculator.Reset();
+                    ChangeOutput(calculator.GetOutput());
+                    break;
+                case '=':
+                    ChangeOutput(calculator.Calculate());
+                    break;
+            }
+        }
+        catch(Exception ex)
+        {
+            calculator.Reset();
+            output = "ERROR";
+            InvokeAsync(StateHasChanged);
         }
     }
 
