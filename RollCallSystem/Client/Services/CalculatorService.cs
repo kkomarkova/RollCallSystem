@@ -1,4 +1,6 @@
-﻿namespace RollCallSystem.Client.Services;
+﻿using System.Globalization;
+
+namespace RollCallSystem.Client.Services;
 
 public enum CalculatorState
 {
@@ -23,16 +25,16 @@ public class CalculatorService
         switch (State)
         {
             case CalculatorState.Plus:
-                result = (double.Parse(Number1) + double.Parse(Number2)).ToString();
+                result = (double.Parse(Number1, CultureInfo.InvariantCulture) + double.Parse(Number2, CultureInfo.InvariantCulture)).ToString();
                 break;
             case CalculatorState.Minus:
-                result = (double.Parse(Number1) - double.Parse(Number2)).ToString();
+                result = (double.Parse(Number1, CultureInfo.InvariantCulture) - double.Parse(Number2, CultureInfo.InvariantCulture)).ToString();
                 break;
             case CalculatorState.Multiply:
-                result = (double.Parse(Number1) * double.Parse(Number2)).ToString();
+                result = (double.Parse(Number1, CultureInfo.InvariantCulture) * double.Parse(Number2, CultureInfo.InvariantCulture)).ToString();
                 break;
             case CalculatorState.Divide:
-                result = (double.Parse(Number1) / double.Parse(Number2)).ToString();
+                result = (double.Parse(Number1, CultureInfo.InvariantCulture) / double.Parse(Number2, CultureInfo.InvariantCulture)).ToString();
                 break;
             default:
                 result = Number1.ToString();
@@ -42,6 +44,7 @@ public class CalculatorService
         Number1 = result;
         Number2 = "0";
         State = CalculatorState.PostEquals;
+        result = result.Replace(',', '.');
         return result;
     }
 
