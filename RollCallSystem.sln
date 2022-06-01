@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RollCallSystem.Client", "Ro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RollCallSystem.Shared", "RollCallSystem\Shared\RollCallSystem.Shared.csproj", "{73F7B913-7DB1-45B6-8550-366C73B14CD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{680236C3-4BE0-4FB2-84F5-BE440AD2C0B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{73F7B913-7DB1-45B6-8550-366C73B14CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F7B913-7DB1-45B6-8550-366C73B14CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F7B913-7DB1-45B6-8550-366C73B14CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{680236C3-4BE0-4FB2-84F5-BE440AD2C0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{680236C3-4BE0-4FB2-84F5-BE440AD2C0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{680236C3-4BE0-4FB2-84F5-BE440AD2C0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{680236C3-4BE0-4FB2-84F5-BE440AD2C0B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
