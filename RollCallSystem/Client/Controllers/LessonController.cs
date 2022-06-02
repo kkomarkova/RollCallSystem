@@ -8,7 +8,7 @@ namespace RollCallSystem.Client.Controllers
     {
         private const string Url = "https://rollcallsystem-kea.azurewebsites.net/api/";
         private HttpClient client;
-
+        
         public LessonController()
         {
             client = new HttpClient();
@@ -16,8 +16,7 @@ namespace RollCallSystem.Client.Controllers
 
         public async Task<Lesson> GetCurrentLesson(User user)
         {
-            Lesson lesson = new Lesson();
-            
+            Lesson lesson;            
             HttpResponseMessage response;
 
             using (var requestMessage =
@@ -40,12 +39,8 @@ namespace RollCallSystem.Client.Controllers
 
         public async Task<List<Lesson>> GetLessonsByMonth(User user, int monthNo)
         {
-            Console.WriteLine("1");
             List<Lesson> lessons = new List<Lesson>();
-            Console.WriteLine("2");
-
             HttpResponseMessage response;
-            Console.WriteLine("3 " + user.Token);
 
             using (var requestMessage =
             new HttpRequestMessage(HttpMethod.Get, Url + "Lessons/ByMonth/" + monthNo))
