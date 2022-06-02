@@ -3,11 +3,12 @@
 <div class="d-flex justify-content-center">
     <button type="button" class="btn btn-secondary btn-sm" disabled=@coffeeButtonDisabled @onclick="CoffeeClicked">Click me when you've had some coffee</button>
 </div>
-<div class="d-flex justify-content-center">
-    <h2> Attandance Broseph says: @response </h2>
+<div>
+
 </div>
-
-
+<div class="d-flex justify-content-center">
+    <h4 class="text-center"> Attandance Broseph says: @response </h4>
+</div>
 @code {
     private string response = "No coffee today?";
     private int coffeesHad = 0;

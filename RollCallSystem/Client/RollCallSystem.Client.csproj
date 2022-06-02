@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Shared\Coffee.razor.css" />
     <None Remove="Shared\Questions.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Shared\Coffee.razor.css" />
     <Content Include="Shared\Questions.razor.css" />
   </ItemGroup>
 
