@@ -172,24 +172,27 @@ public class CalculatorTests
     }
 
     //The clear button must reset the calculator. The old values must not interfere with the new calculation.
-    [TestMethod]
-    public void TestClear()
+    [DataTestMethod]
+    [DataRow(CalculatorState.Plus, "8")]
+    [DataRow(CalculatorState.Minus, "4")]
+    [DataRow(CalculatorState.Multiply, "12")]
+    [DataRow(CalculatorState.Divide, "3")]
+    public void TestClear(CalculatorState operation, string expectedResult)
     {
         //Arrange
         CalculatorService calculator = new CalculatorService();
-        CalculatorState operation = CalculatorState.Plus;
         int number1 = 12;
         int number2 = 4;
         int number3 = 6;
-        string expectedResult = "18";
+        int number4 = 2;
         //Act
         calculator.AddDigit(number1);
         calculator.ChangeState(operation);
         calculator.AddDigit(number2);
         calculator.Reset();
-        calculator.AddDigit(number1);
-        calculator.ChangeState(operation);
         calculator.AddDigit(number3);
+        calculator.ChangeState(operation);
+        calculator.AddDigit(number4);
         //Assert
         Assert.AreEqual(expectedResult, calculator.Calculate());
     }
@@ -239,17 +242,19 @@ public class CalculatorTests
     }
 
     //The calculator must be able to handle decimal values for all operations
-    [TestMethod]
-    public void TestDecimalValues()
+    [DataTestMethod]
+    [DataRow(CalculatorState.Plus, "13.7")]
+    [DataRow(CalculatorState.Minus, "-0.7000000000000002")]
+    [DataRow(CalculatorState.Multiply, "46.800000000000004")]
+    [DataRow(CalculatorState.Divide, "0.9027777777777778")]
+    public void TestDecimalValues(CalculatorState operation, string expectedResult)
     {
         //Arrange
         CalculatorService calculator = new CalculatorService();
-        CalculatorState operation = CalculatorState.Plus;
         int number1 = 6;
         int decimal1 = 5;
         int number2 = 7;
         int decimal2 = 2;
-        string expectedResult = "13.7";
         //Act
         calculator.AddDigit(number1);
         calculator.AddComma();
