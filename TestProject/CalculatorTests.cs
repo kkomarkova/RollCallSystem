@@ -51,7 +51,7 @@ public class CalculatorTests
         CalculatorState operation = CalculatorState.Minus;
         int number1 = 6;
         int number2 = 7;
-        string expectedResult = "-1";
+        string expectedResult = "1";
         //Act
         calculator.AddDigit(number1);
         calculator.ChangeState(operation);
