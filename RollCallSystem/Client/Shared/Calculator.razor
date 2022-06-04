@@ -4,37 +4,37 @@
       @*<div class = title >Personal calculator</div>*@
       </div>
        <div class="d-flex justify-content-center">
-      <table border="1">
+      <table id="calculator" border="1">
          <tr>
             <td colspan="3"><input type="text" readonly="readonly" id="result" value="@output"/></td>
             <!-- clr() function will call clr to clear all value -->
-            <td><input type="button" value="c" @onclick="Clear"/> </td>
+            <td><input id ="C" type="button" value="c" @onclick="Clear"/> </td>
          </tr>
          <tr>
             <!-- create button and assign value to each button -->
             <!-- dis("1") will call function dis to display value -->
-            <td><input type="button" value="1" @onclick="Button1"/> </td>
-            <td><input type="button" value="2" @onclick="Button2"/> </td>
-            <td><input type="button" value="3" @onclick="Button3"/> </td>
-            <td><input type="button" value="/" @onclick="Divide"/> </td>
+            <td><input id ="1" type="button" value="1" @onclick="Button1"/> </td>
+            <td><input id ="2"type="button" value="2" @onclick="Button2"/> </td>
+            <td><input id ="3"type="button" value="3" @onclick="Button3"/> </td>
+            <td><input id ="/"type="button" value="/" @onclick="Divide"/> </td>
          </tr>
          <tr>
-            <td><input type="button" value="4" @onclick="Button4"/> </td>
-            <td><input type="button" value="5" @onclick="Button5"/> </td>
-            <td><input type="button" value="6" @onclick="Button6"/> </td>
-            <td><input type="button" value="-" @onclick="Minus"/> </td>
+            <td><input id ="4" type="button" value="4" @onclick="Button4"/> </td>
+            <td><input id ="5"type="button" value="5" @onclick="Button5"/> </td>
+            <td><input id ="6"type="button" value="6" @onclick="Button6"/> </td>
+            <td><input id ="-"type="button" value="-" @onclick="Minus"/> </td>
          </tr>
          <tr>
-            <td><input type="button" value="7" @onclick="Button7"/> </td>
-            <td><input type="button" value="8" @onclick="Button8"/> </td>
-            <td><input type="button" value="9" @onclick="Button9"/> </td>
-            <td><input type="button" value="+" @onclick="Plus"/> </td>
+            <td><input id ="7"type="button" value="7" @onclick="Button7"/> </td>
+            <td><input id ="8"type="button" value="8" @onclick="Button8"/> </td>
+            <td><input id ="9"type="button" value="9" @onclick="Button9"/> </td>
+            <td><input id ="+" type="button" value="+" @onclick="Plus"/> </td>
          </tr>
          <tr>
-            <td><input type="button" value="." @onclick="ButtonComma"/> </td>
-            <td><input type="button" value="0" @onclick="Button0"/> </td>
-            <td><input type="button" value="=" @onclick="Equals"/> </td>
-            <td><input type="button" value="*" @onclick="Multiply"/> </td>
+            <td><input id ="."type="button" value="." @onclick="ButtonComma"/> </td>
+            <td><input id ="0"type="button" value="0" @onclick="Button0"/> </td>
+            <td><input id ="="type="button" value="=" @onclick="Equals"/> </td>
+            <td><input id ="*"type="button" value="*" @onclick="Multiply"/> </td>
          </tr>
       </table>
   </div>
