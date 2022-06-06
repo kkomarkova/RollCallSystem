@@ -41,4 +41,52 @@ public class BallTests
         //Assert
         Assert.IsTrue(response);
     }
+
+    [TestMethod]
+    public void TestTooShort()
+    {
+        //Arrange
+        MagicBallService ball = new MagicBallService();
+        string question = "huh?";
+        //Act
+        bool response = ball.ValidateQuestion(question);
+        //Assert
+        Assert.IsFalse(response);
+    }
+
+    [TestMethod]
+    public void TestLongEnough()
+    {
+        //Arrange
+        MagicBallService ball = new MagicBallService();
+        string question = "1234?";
+        //Act
+        bool response = ball.ValidateQuestion(question);
+        //Assert
+        Assert.IsTrue(response);
+    }
+
+    [TestMethod]
+    public void TestTooLong()
+    {
+        //Arrange
+        MagicBallService ball = new MagicBallService();
+        string question = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?"; //51 chars
+        //Act
+        bool response = ball.ValidateQuestion(question);
+        //Assert
+        Assert.IsFalse(response);
+    }
+
+    [TestMethod]
+    public void TestShortEnough()
+    {
+        //Arrange
+        MagicBallService ball = new MagicBallService();
+        string question = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?"; //50 chars
+        //Act
+        bool response = ball.ValidateQuestion(question);
+        //Assert
+        Assert.IsTrue(response);
+    }
 }

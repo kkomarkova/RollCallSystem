@@ -34,7 +34,7 @@ public class MagicBallService
 
     public bool ValidateQuestion(string question)
     {
-        if (!question.EndsWith('?'))
+        if (!question.EndsWith('?') || question.Length < 5 || question.Length > 50)
             return false;
         return true;
     }
