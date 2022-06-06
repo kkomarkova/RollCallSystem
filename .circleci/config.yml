@@ -20,7 +20,7 @@ jobs:
           command: dotnet build
       - run: 
           name: Run tests
-          command: dotnet test --no-build --logger "trx" --results-directory tests/TestResults/
+          command: dotnet test --no-build --logger "trx" --results-directory tests/TestResults/ --filter FullyQualifiedName!=E2E
       - run:
           name: Generate test results
           when: always
