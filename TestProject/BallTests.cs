@@ -71,7 +71,7 @@ public class BallTests
     {
         //Arrange
         MagicBallService ball = new MagicBallService();
-        string question = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?"; //51 chars
+        string question = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?"; //51 chars
         //Act
         bool response = ball.ValidateQuestion(question);
         //Assert
