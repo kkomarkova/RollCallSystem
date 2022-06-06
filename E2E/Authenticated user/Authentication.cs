@@ -10,6 +10,7 @@ using System.Collections.Generic;
 namespace E2E
 {
     [TestClass]
+    [TestCategory("E2E")]
     public class Authentication
     {
         IWebDriver driver = new ChromeDriver(); 

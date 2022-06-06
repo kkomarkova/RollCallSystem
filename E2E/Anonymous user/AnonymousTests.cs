@@ -14,6 +14,7 @@ using OpenQA.Selenium.Interactions;
 namespace E2E.Anonymous_tests
 {
     [TestClass]
+    [TestCategory("E2E")]
     public class AnonymousTests
     {
         IWebDriver driver = new ChromeDriver();

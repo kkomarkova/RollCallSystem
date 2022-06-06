@@ -1,0 +1,41 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.1
+
+jobs:
+  build_and_test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          command: wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && sudo dpkg -i packages-microsoft-prod.deb
+          name: Pre-Install tasks
+      - run:
+          command: sudo apt-get update && sudo apt-get install -y apt-transport-https && sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
+          name: Install dotnet-skd-6.0
+      - run:
+          name: Build
+          command: dotnet build
+      - run: 
+          name: Run tests
+          command: dotnet test --no-build --logger "trx" --results-directory tests/TestResults/ --filter TestCategory!=E2E
+      - run:
+          name: Generate test results
+          when: always
+          command: |
+            dotnet new tool-manifest
+            dotnet tool install --local trx2junit
+            pwd
+            dotnet trx2junit tests/TestResults/*.trx
+      - store_test_results:
+          name: Store test results in tests
+          path: tests/TestResults
+      - store_artifacts:
+          name: Store test results in artifacts
+          path: tests/TestResults
+workflows:
+  build_and_test:
+    jobs:
+      - build_and_test
