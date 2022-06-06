@@ -69,8 +69,41 @@ namespace E2E
             Assert.IsTrue(message.Text.Contains("You are logged out."));
 
         }
-    }
-          
+
+        [TestMethod]
+        public void TestPublicAPI()
+        {
+            //Get to the main page and click on the login button
+            driver.Navigate().GoToUrl("https://localhost:7064/");
+            //Code for Maximing the browser window
+            driver.Manage().Window.Maximize();
+
+            WebDriverWait w = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
+            w.Until(ExpectedConditions.ElementExists(By.XPath("//a[@class='ms_btn login_btn']"))).Click();
+
+            //Wait for the new page to open and login in with username and password
+            IWebElement Username = w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//input[@id='Input_Email']")));
+            Username.SendKeys("teacher@test.com");
+
+            var userPasswordField = driver.FindElement(By.XPath("//input[@id='Input_Password']"));
+            userPasswordField.SendKeys("Teacher1!");
+
+            var buttonlg = driver.FindElement(By.XPath("//button[@id='login-submit']"));
+            buttonlg.Click();
+
+            //Navigate to the Roll Call page
+            IWebElement Rollcallicon = w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//a[@id='rollcallicon']")));
+            Rollcallicon.Click();
+
+            //Find the element containing the quote taken from the public API
+            var quoteText = w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//p[@id='quote']")));
+            //Get text out of the element
+            var text = quoteText.Text;
+
+            //Check if any data is received
+            Assert.IsTrue(text.Length > 1);
+        }
+    } 
 }
 
     
