@@ -15,6 +15,7 @@ namespace E2E
         IWebDriver driver = new ChromeDriver(); 
        
         [TestMethod]
+        [TestCategory("E2E")]
         public void Login()
         {
             //Get to the main page and click on the login button

@@ -19,6 +19,7 @@ namespace E2E.Anonymous_tests
         IWebDriver driver = new ChromeDriver();
 
         [TestMethod]
+        [TestCategory("E2E")]
         public void ConvienceTool()
         {
             //Navigate to the Convience page and wait for loading
